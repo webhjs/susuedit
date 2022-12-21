@@ -14,12 +14,38 @@ import StatusBar from "./Status-bar";
 import AttributeDialog from "@/bse/element/common/AttributeDialog";
 
 /* js调用组件 */
-import basicTimePicker from '@bse/ui/basic/date-picker'
-import basicSelect from '@bse/ui/basic/select'
-import basicDiagnose from '@bse/ui/basic/bse-diagnose'
-import basicSurgery from '@bse/ui/basic/bse-surgery'
-import designPopper from '@bse/ui/basic/design-popper'
+import basicTimePicker from "@bse/ui/basic/date-picker";
+import basicSelect from "@bse/ui/basic/select";
+import basicDiagnose from "@bse/ui/basic/bse-diagnose";
+import basicSurgery from "@bse/ui/basic/bse-surgery";
+import designPopper from "@bse/ui/basic/design-popper";
 /* js调用组件 */
+
+const ME_TABS = [
+  "tooth-labeling",
+  "men-history",
+  "heart-position",
+  "pro-eyes",
+  "pri-teeth-label",
+  "opt-position",
+  "house-corner",
+  "pul-tuber",
+]; // 医学表达式
+const BASIC_ELEMENT = [
+  "radio",
+  "checkbox",
+  "date",
+  "input",
+  "select",
+  "label",
+  "number",
+  "splitline",
+  "pagebreak",
+  "diagnose",
+  "surgery",
+  "sign",
+  "bloodPressure",
+]; // 元素控件
 
 export default {
   props: {
@@ -52,7 +78,7 @@ export default {
     };
   },
   mounted() {
-    this.editor.addListener("onRead", async(etor) => {
+    this.editor.addListener("onRead", async (etor) => {
       console.log("onRead获取dom节点", etor.getEditorArea());
       etor.getEditorArea().addEventListener("keydown", function (e) {
         [46].includes(e.keyCode) && etor.deleteKeyDow(e);
@@ -72,8 +98,8 @@ export default {
       });
 
       // 调试设置默认内容
-      const cxt = await fetch('/edit_template.html').then(res => res.text())
-      etor.setContent(cxt)
+      const cxt = await fetch("/edit_template.html").then((res) => res.text());
+      etor.setContent(cxt);
     });
   },
   methods: {
@@ -143,15 +169,18 @@ export default {
         this.editor.createdOrExportXmlFile("导出xml文件.xml", "4.0", true);
       }
 
-      if (name === 'testCopyContentHtml') {
-        navigator.clipboard.writeText(this.editor.getContent()).then(() => {
-          this.$message.success('复制成功')
-        }).catch(() => { this.$message.error('复制失败') })
+      if (name === "testCopyContentHtml") {
+        navigator.clipboard
+          .writeText(this.editor.getContent())
+          .then(() => {
+            this.$message.success("复制成功");
+          })
+          .catch(() => {
+            this.$message.error("复制失败");
+          });
       }
     },
     dblclickEdit(e) {
-      const ME_TABS = ['tooth-labeling','men-history','heart-position','pro-eyes','pri-teeth-label','opt-position','house-corner','pul-tuber'] // 医学表达式
-      const BASIC_ELEMENT = ["radio","checkbox","date","input","select","label","number","splitline","pagebreak","diagnose","surgery","sign","bloodPressure"]; // 元素控件
       // 编辑模式
       const attr = this.editor.getItorElementBseAttr(e.target);
       if (attr.descr !== '不是"bse"标签元素') {
@@ -480,21 +509,72 @@ export default {
       }
     },
     async hoverDesign(e) {
+      const el = e.target
       const attr = this.editor.getItorElementBseAttr(e.target);
+      const { type } = attr
       if (attr.descr !== '不是"bse"标签元素') {
         const listeners = {
           del: () => {
-            console.log('删除了')
-          }
-        }
+            console.log("删除了");
+          },
+        };
         const instance = await designPopper.getInstance({
           el: attr.elSrc,
-          editor: this.editor,
-          listeners
+          editor: this.editor
         });
         instance.show();
+        if (ME_TABS.includes(type)) {
+          // 医疗表达式
+          instance.label = `控件(医学表达式【${medExpressionElement.label}】)`;
+          // 编辑
+          instance.listeners.edit = () => {
+            instance.hide();
+            medicalDialogRef &&
+              medicalDialogRef.show({
+                model: 2,
+                el: e.target,
+                attr,
+              });
+          };
+
+          // 删除
+          instance.listeners.del = () => {
+            instance.hide();
+            el.remove();
+          };
+        } else if (BASIC_ELEMENT.includes(type)) {
+          // 普通其他元素
+          instance.label = `控件【${type}】`;
+          // 编辑
+          instance.listeners.edit = () => {
+            instance.hide();
+            this.$refs.AttributeDialog &&
+              this.$refs.AttributeDialog.isShow({ ...attr, elTag: el }, "editBseEle");
+          };
+
+          // 删除
+          instance.listeners.del = () => {
+            instance.hide();
+            attr.elSrc.remove();
+          };
+        } else {
+          instance.listeners.edit = () => {
+            const attr = this._bse.getItorElementBseAttr(el);
+            this._bse.execCommand("composeelementdialog", attr, (payload) => {
+              attr.elSrc.setAttribute(
+                "bse",
+                encodeURIComponent(JSON.stringify(payload))
+              );
+            });
+          };
+          // 删除
+          instance.listeners.del = () => {
+            instance.hide();
+            attr.elSrc.remove();
+          };
+        }
       }
-    }
+    },
   },
 };
 </script>

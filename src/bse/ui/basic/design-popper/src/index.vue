@@ -8,7 +8,7 @@
     v-bind="attrs"
     v-on="listeners"
     ref="popper"
-    :popper-class="`bse-popper-xfpuo9t3 bse-popper-border-primary bse-popper-p-0 ${
+    :popper-class="`bse-popper-xfpuo9t3 ${
       attrs[`popper-class`]
     }`"
   >
@@ -28,14 +28,14 @@
       <el-button
         v-if="isFunction(listeners.edit)"
         type="text"
-        class="wd-text-[#28A670] underline"
+        class="bse-btn_success"
         @click="onEdit"
         >编辑</el-button
       >
       <el-button
         v-if="isFunction(listeners.del)"
         type="text"
-        class="!wd-text-[#ed3f13] underline"
+        class="bse-btn_error"
         @click="onDel"
         >删除</el-button
       >
@@ -125,4 +125,14 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style>
+.bse-popper-xfpuo9t3 {
+  padding: 0px 10px;
+}
+.bse-btn_success {
+  color: #28A670;
+}
+.bse-btn_error {
+  color: #ed3f13;
+}
+</style>

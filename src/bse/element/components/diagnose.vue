@@ -31,7 +31,7 @@
       ></el-checkbox>
     </el-form-item>
     <el-form-item label="显示模式" class="form-fullitem">
-      <el-radio-group v-model="formInline.mode">
+      <el-radio-group v-model="formInline.mode" class="bse-btn_hfdg2cs">
         <el-radio-button label="horizontal">横版</el-radio-button>
         <el-radio-button label="vertical">竖版</el-radio-button>
       </el-radio-group>
@@ -196,5 +196,12 @@ export default {
 /deep/ .el-checkbox__label {
   font-size: 12px;
   color: #333 !important;
+}
+.bse-btn_hfdg2cs /deep/ .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+  background-color: #28a670;
+  border-color: #28a670;
+}
+.bse-btn_hfdg2cs /deep/ .el-radio-button__inner {
+  padding: 8px 18px;
 }
 </style>

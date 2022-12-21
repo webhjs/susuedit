@@ -6,6 +6,7 @@
     v-if="dialogVisible"
     :title="_title"
     :visible.sync="dialogVisible"
+    custom-class="bse-dialog_fxgef8sl"
     width="800px"
     :close-on-click-modal="false"
     append-to-body
@@ -16,8 +17,14 @@
       :data="formInline"
     />
     <span slot="footer" class="dialog-footer">
-      <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="submitFrom">确 定</el-button>
+      <el-button size="small" @click="dialogVisible = false">取 消</el-button>
+      <el-button
+        size="small"
+        class="bse-btn_fsag8xlg"
+        type="success"
+        @click="submitFrom"
+        >确 定</el-button
+      >
     </span>
   </el-dialog>
 </template>
@@ -37,8 +44,8 @@ export default {
   inject: ["getEditor"],
   provide() {
     return {
-      getEditor: this.getEditor
-    }
+      getEditor: this.getEditor,
+    };
   },
   data() {
     return {
@@ -403,3 +410,27 @@ export default {
   },
 };
 </script>
+<style>
+.bse-dialog_fxgef8sl .el-dialog__header {
+  background: #28a670;
+  padding: 15px 20px 10px 20px;
+}
+.bse-dialog_fxgef8sl .el-dialog__header .el-dialog__title {
+  font-weight: 700;
+  line-height: 20px;
+  font-size: 15px;
+}
+.bse-dialog_fxgef8sl .el-dialog__header .el-dialog__title,
+.bse-dialog_fxgef8sl .el-dialog__headerbtn .el-dialog__close {
+  color: white;
+}
+.bse-dialog_fxgef8sl .el-dialog__headerbtn {
+  top: 15px;
+}
+.bse-btn_fsag8xlg {
+  color: #fff;
+  background-color: #28a670;
+  border-color: #28a670;
+  margin-left: 15px!important;
+}
+</style>
