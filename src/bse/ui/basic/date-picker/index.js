@@ -51,14 +51,25 @@ const datePicker = {
       componentInstance.$el.style.top = `${top}px`
       componentInstance.attrs = opts.attrs
       componentInstance.listeners = opts.listeners
-      opts.editor.container.parentNode.appendChild(componentInstance.$el)
+      opts.editor.container.appendChild(componentInstance.$el)
+      datePicker.bindEvent(opts, componentInstance)
       return componentInstance
     }
     componentInstance.$el.style.left = `${left}px`
     componentInstance.$el.style.top = `${top}px`
     componentInstance.attrs = opts.attrs
     componentInstance.listeners = opts.listeners
+    datePicker.bindEvent(opts, componentInstance)
     return componentInstance
+  },
+
+  bindEvent(opts, instance) {
+    opts.editor.getEditorArea().removeEventListener('click', callBack)
+    const callBack = () => {
+      instance.hide()
+      opts.editor.getEditorArea().removeEventListener('click', callBack)
+    }
+    opts.editor.getEditorArea().addEventListener('click', callBack)
   }
 }
 

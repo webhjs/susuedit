@@ -65,13 +65,23 @@ const designPopperBubble = {
       componentInstance.styles = opts.styles
       componentInstance.attrs = opts.attrs
       componentInstance.listeners = opts.listeners
-      opts.editor.container.parentNode.appendChild(componentInstance.$el)
+      opts.editor.container.appendChild(componentInstance.$el)
+      designPopperBubble.bindEvent(opts, componentInstance)
       return componentInstance
     }
     componentInstance.styles = opts.styles
     componentInstance.attrs = opts.attrs
     componentInstance.listeners = opts.listeners
+    designPopperBubble.bindEvent(opts, componentInstance)
     return componentInstance
+  },
+  bindEvent(opts, instance) {
+    opts.editor.getEditorArea().removeEventListener('mouseover', callBack)
+    const callBack = () => {
+      instance.hide()
+      opts.editor.getEditorArea().removeEventListener('mouseover', callBack)
+    }
+    opts.editor.getEditorArea().addEventListener('mouseover', callBack)
   }
 }
 

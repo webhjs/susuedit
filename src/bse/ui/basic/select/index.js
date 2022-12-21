@@ -49,13 +49,23 @@ const select = {
       componentInstance.attrs = opts.attrs
       componentInstance.listeners = opts.listeners
       opts.editor.container.appendChild(componentInstance.$el)
+      select.bindEvent(opts, componentInstance)
       return componentInstance
     }
     componentInstance.$el.style.left = `${left}px`
     componentInstance.$el.style.top = `${top - 20}px`
     componentInstance.attrs = opts.attrs
     componentInstance.listeners = opts.listeners
+    select.bindEvent(opts, componentInstance)
     return componentInstance
+  },
+  bindEvent(opts, instance) {
+    opts.editor.getEditorArea().removeEventListener('click', callBack)
+    const callBack = () => {
+      instance.hide()
+      opts.editor.getEditorArea().removeEventListener('click', callBack)
+    }
+    opts.editor.getEditorArea().addEventListener('click', callBack)
   }
 }
 
