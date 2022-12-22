@@ -76,12 +76,26 @@ const designPopperBubble = {
     return componentInstance
   },
   bindEvent(opts, instance) {
-    opts.editor.getEditorArea().removeEventListener('mouseover', callBack)
-    const callBack = () => {
-      instance.hide()
-      opts.editor.getEditorArea().removeEventListener('mouseover', callBack)
+    let timmer
+    const callBack = (e) => {
+      const el = e.target
+      const attr = opts.editor.getItorElementBseAttr(e.target);
+      if (attr.descr === '不是"bse"标签元素') {
+        timmer && clearTimeout(timmer)
+        timmer = setTimeout(() => {
+          instance.hide()
+          opts.editor.document.removeEventListener('mouseover', callBack)
+        }, 350)
+      }
     }
-    opts.editor.getEditorArea().addEventListener('mouseover', callBack)
+    opts.editor.document.addEventListener('mouseover', callBack)
+
+
+    const clearTimmer = () => {
+      timmer && clearTimeout(timmer)
+      instance.$refs.popper.$refs.popper.removeEventListener('mouseenter', clearTimmer)
+    }
+    instance.$refs.popper.$refs.popper.addEventListener('mouseenter', clearTimmer)
   }
 }
 
