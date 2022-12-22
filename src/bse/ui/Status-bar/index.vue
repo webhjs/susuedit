@@ -51,5 +51,6 @@ export default {
 }
 .bse-edit_status .bse-page_set .bse-foot_set {
   margin-left: 5px;
+  color: #28a670;
 }
 </style>
