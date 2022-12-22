@@ -227,14 +227,14 @@ export default {
             name: "number",
             title: "数字",
           },
-          {
-            name: "splitline",
-            title: "分割线",
-          },
-          {
-            name: "pagebreak",
-            title: "分页",
-          },
+          // {
+          //   name: "splitline",
+          //   title: "分割线",
+          // },
+          // {
+          //   name: "pagebreak",
+          //   title: "分页",
+          // },
           {
             name: "diagnose",
             title: "诊断",

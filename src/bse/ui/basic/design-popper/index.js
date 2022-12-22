@@ -42,6 +42,7 @@ const designPopperBubble = {
    */
   getInstance(opts = {}) {
     if (!opts.editor) return console.error(`[error：传入的editor实例不能为空]`)
+    designPopperBubble.hideAll()
     opts = {
       ...defaultOpts,
       ...opts
@@ -81,7 +82,6 @@ const designPopperBubble = {
     })
   },
   bindEvent(opts, instance) {
-    designPopperBubble.hideAll()
     let timmer
     const callBack = (e) => {
       const el = e.target

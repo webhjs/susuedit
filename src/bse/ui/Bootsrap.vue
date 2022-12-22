@@ -90,7 +90,7 @@ export default {
           this.dblclickEdit(e);
         }
       });
-
+      
       etor.getEditorArea().addEventListener("mouseover", (e) => {
         if (this.optionsMode === "designMode") {
           this.hoverDesign(e);

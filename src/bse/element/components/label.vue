@@ -6,13 +6,22 @@
     <el-form-item label="编码" class="form-item" prop="id">
       <el-input class="input-item" v-model="formInline.id" placeholder="请输入编码"></el-input>
     </el-form-item>
+    <el-form-item label="绑定值" class="form-item">
+      <el-cascader
+        class="input-item"
+        v-model="formInline.bind"
+        :options="bindOptions"
+        clearable
+      >
+      </el-cascader>
+    </el-form-item>
     <el-form-item label="水印" class="form-item">
       <el-input class="input-item" v-model="formInline.placeholder" placeholder="请输入水印"></el-input>
     </el-form-item>
     <el-form-item label="默认值" class="form-item">
       <el-input class="input-item" v-model="formInline.value" placeholder="请输入默认值"></el-input>
     </el-form-item>
-    <el-form-item label="提示信息" class="form-fullitem">
+    <el-form-item label="提示信息" class="form-item">
       <el-input class="input-item" v-model="formInline.altTitle" placeholder="请输入提示信息"></el-input>
     </el-form-item>
     <el-form-item label="行为属性" class="form-item">
@@ -46,6 +55,7 @@ export default {
       }
     }
   },
+  inject: ["getEditor"],
   data() {
     return {
       formInline: {
@@ -58,7 +68,15 @@ export default {
         id: { required: true, message: '请输入编码', trigger: 'blur' }
       },
       notallowdeleteChecked: null,
-      contenteditableChecked: null
+      contenteditableChecked: null,
+      bindOptions: [],
+      cascaderPropsMap: {
+        _children: "children",
+        _parentId: "parentId",
+        _order: "order",
+        _id: "id",
+        _level: "level",
+      },
     }
   },
   watch: {
@@ -75,7 +93,88 @@ export default {
       },
       immediate: true
     }
-  }
+  },
+  mounted() {
+    this._instanceOpt = this.getEditor().getOptions();
+    this._instanceOpt.requestCascaderBindOptions((param) => {
+      // 获取级联选择数据
+      this.bindOptions = this.arrToTree(param, this.cascaderPropsMap);
+    }, this.formInline);
+  },
+  methods: {
+    // 数组转成树型数据
+    arrToTree(operateArr, props) {
+      const __id = props["_id"] || "_id",
+        __parentId = props["_parentId"] || "_parentId",
+        __level = props["_level"] || "_level",
+        __order = props["_order"] || "_order",
+        __children = props["_children"] || "_children",
+        __path = props["_path"] || "_path";
+      let treeData = [],
+        surplus = [];
+      operateArr.forEach((ele) => {
+        const some = operateArr.some((el) => ele[__parentId] == el[__id]);
+        if (some) {
+          surplus.push(ele);
+        } else {
+          const itemLevel = (listlevel, level, path) => {
+            listlevel.forEach((li, inx) => {
+              li[__level] = level;
+              li[__order] = inx;
+              li[__path] = path + "/" + inx;
+              if (li[__children] && li[__children].length) {
+                itemLevel(li[__children], level + 1, li[__path]);
+              }
+            });
+          };
+          ele[__children] &&
+            ele[__children].length &&
+            itemLevel(ele[__children], 2, String(treeData.length));
+          treeData.push({
+            ...ele,
+            [__order]: treeData.length,
+            [__path]: String(treeData.length),
+            [__level]: 0,
+          });
+        }
+      });
+      const findItem = (treeDataTree, sur, level) => {
+        for (let tree of treeDataTree) {
+          if (tree[__id] == sur[__parentId]) {
+            tree[__children]
+              ? tree[__children].push({
+                  ...sur,
+                  [__order]: tree[__children].length,
+                  [__path]: tree._path + "/" + tree[__children].length,
+                  [__level]: level,
+                })
+              : (tree[__children] = [
+                  {
+                    ...sur,
+                    [__order]: 0,
+                    [__path]: tree[__path] + "/" + 0,
+                    [__level]: level,
+                  },
+                ]);
+            return tree;
+          }
+          if (tree[__children] && tree[__children].length) {
+            const find = findItem(tree[__children], sur, level + 1);
+            if (find) return find;
+          }
+        }
+      };
+      while (surplus && surplus.length) {
+        for (let i = 0; i < surplus.length; i++) {
+          if (findItem(treeData, surplus[i], 1)) {
+            surplus.splice(i, 1);
+            break;
+          }
+        }
+      }
+      return treeData;
+    },
+  },
 }
 </script>
 

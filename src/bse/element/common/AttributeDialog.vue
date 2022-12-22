@@ -433,4 +433,8 @@ export default {
   border-color: #28a670;
   margin-left: 15px!important;
 }
+.bse-dialog_fxgef8sl .el-checkbox__input.is-checked .el-checkbox__inner{
+  background-color: #28a670;
+  border-color: #28a670;
+}
 </style>

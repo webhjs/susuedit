@@ -1,19 +1,54 @@
 <template>
   <div class="bse-wrap">
     <div class="left-wrap">
-      <el-button slot="append" icon="el-icon-download" @click="composeElement('moduleEle')">模板元素</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="composeElement('composeEle')">组合元素</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="diagnoseElement">诊断元素</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="surgeryElement">手术元素</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="validateRules">验证数据</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="inserXmlModule">插入xml</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="getXmlorhtmlString">获取xml或html字符串</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="addTab">快速生成编辑器测试</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="updateApiDate">更新数据</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="getInnerContent">获取文本行内内容</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="setContent">设置内容为空</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="getContent">获取内容</el-button>
-      <el-button slot="append" icon="el-icon-download" @click="getContentFocus">focus编辑器区域</el-button>
+      <el-button
+        slot="append"
+        icon="el-icon-download"
+        @click="composeElement('moduleEle')"
+        >模板元素</el-button
+      >
+      <el-button
+        slot="append"
+        icon="el-icon-download"
+        @click="composeElement('composeEle')"
+        >组合元素</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="diagnoseElement"
+        >诊断元素</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="surgeryElement"
+        >手术元素</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="validateRules"
+        >验证数据</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="inserXmlModule"
+        >插入xml</el-button
+      >
+      <el-button
+        slot="append"
+        icon="el-icon-download"
+        @click="getXmlorhtmlString"
+        >获取xml或html字符串</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="addTab"
+        >快速生成编辑器测试</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="updateApiDate"
+        >更新数据</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="getInnerContent"
+        >获取文本行内内容</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="setContent"
+        >设置内容为空</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="getContent"
+        >获取内容</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="getContentFocus"
+        >focus编辑器区域</el-button
+      >
       <el-radio-group v-model="mode" @change="switchEditorMode">
         <el-radio-button label="designMode">设计</el-radio-button>
         <el-radio-button label="editMode">编辑</el-radio-button>
@@ -26,46 +61,100 @@
       </el-radio-group>
       <div class="left-top">
         <ul>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落</li>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落1</li>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落2</li>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落3</li>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落4</li>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落5</li>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落6</li>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落7</li>
-          <li @click="handlerChangeSection"><i class="el-icon-message"></i> 段落8</li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落
+          </li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落1
+          </li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落2
+          </li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落3
+          </li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落4
+          </li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落5
+          </li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落6
+          </li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落7
+          </li>
+          <li @click="handlerChangeSection">
+            <i class="el-icon-message"></i> 段落8
+          </li>
         </ul>
       </div>
     </div>
     <div class="center-wrap">
-      <div :ref="`bseRef`" style="height: 800px;width: 500px;"></div>
+      <div :ref="`bseRef`" style="height: 800px; width: 500px"></div>
     </div>
     <div class="right-wrap">
       <div class="right-top">
         <ul>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素1</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素2</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素3</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素4</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素5</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素6</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素7</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 组合元素8</li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素1
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素2
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素3
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素4
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素5
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素6
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素7
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 组合元素8
+          </li>
         </ul>
       </div>
       <div class="right-bottom">
         <ul>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素1</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素2</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素3</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素4</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素5</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素6</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素7</li>
-          <li @click="handlerChangeModule"><i class="el-icon-message"></i> 模板元素8</li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素1
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素2
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素3
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素4
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素5
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素6
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素7
+          </li>
+          <li @click="handlerChangeModule">
+            <i class="el-icon-message"></i> 模板元素8
+          </li>
         </ul>
       </div>
     </div>
@@ -77,16 +166,16 @@ import Bse from "./bse";
 export default {
   data() {
     return {
-      activeName: 'first',
+      activeName: "first",
       editableTabs: [],
-      mode: 'previewMode',
-      modePaper: 'A4'
-    }
+      mode: "previewMode",
+      modePaper: "A4",
+    };
   },
   mounted() {
     const instance = (this._instance = new Bse.BSEedit({
       el: this.$refs.bseRef,
-      height: '900px',
+      height: "900px",
       toolbars: {
         // 菜单栏
         // nav: [
@@ -210,535 +299,599 @@ export default {
       },
       contextMenus: [
         {
-          label: '组套',
-          icon: 'el-icon-printer',
+          label: "组套",
+          icon: "el-icon-printer",
           onClick: () => {
-            console.log('11111')
+            console.log("11111");
           },
-          disable: true
+          disable: true,
         },
         {
-          label: '快捷组套',
-          icon: 'el-icon-printer',
+          label: "快捷组套",
+          icon: "el-icon-printer",
           onClick: (_, editor) => {
-            console.log(editor)
-          }
-        }
+            console.log(editor);
+          },
+        },
       ],
       // 获取表格数据 外部接口实现
       getDynamicTable(callback, formInline) {
-        console.log('动态表单', formInline)
+        console.log("动态表单", formInline);
         setTimeout(() => {
           callback({
             tablelist: [
               {
-                bseTableName: '性别表'
+                bseTableName: "性别表",
               },
               {
-                bseTableName: '备注表'
+                bseTableName: "备注表",
               },
               {
-                bseTableName: '计算表'
-              }
+                bseTableName: "计算表",
+              },
             ], // 动态表格数据
             tableMapping: {
-              表名: 'bseTableName'
-            } // 动态表格映射
-          })
-        }, 2000)
+              表名: "bseTableName",
+            }, // 动态表格映射
+          });
+        }, 2000);
       },
       // 点击表格 外部接口实现
       requestTable(callback, param) {
-        console.log('点击表格', param)
+        console.log("点击表格", param);
         setTimeout(() => {
           callback({
             tablefieldlist: [
               {
-                bseFieldName: '男'
+                bseFieldName: "男",
               },
               {
-                bseFieldName: '女'
-              }
+                bseFieldName: "女",
+              },
             ], // 动态表格数据
             tablefieldMapping: {
-              字段名: 'bseFieldName'
-            } // 动态表格映射
-          })
-        }, 2000)
+              字段名: "bseFieldName",
+            }, // 动态表格映射
+          });
+        }, 2000);
       },
       // 点击字段 外部接口实现
       requestTableField(callback, param) {
-        console.log('点击字段', param)
+        console.log("点击字段", param);
         setTimeout(() => {
           callback([
             {
-              value: '男'
+              value: "男",
             },
             {
-              value: '女'
-            }
-          ])
-        }, 2000)
+              value: "女",
+            },
+          ]);
+        }, 2000);
       },
       /* 诊断接口定义 */
       // 获取诊断表单字段
       requestDiagnoseField(callback, param, formInline) {
-        console.log('点击字段', param, formInline, this.activeName)
+        console.log("点击字段", param, formInline, this.activeName);
         setTimeout(() => {
           callback([
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
             },
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
-            }
-          ])
-        }, 2000)
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
+            },
+          ]);
+        }, 2000);
       },
       // 获取历史诊断
       requestDiagnosHistroyTable(callback, formInline) {
-        console.log('点击字段', formInline)
+        console.log("点击字段", formInline);
         setTimeout(() => {
           callback([
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
-            }
-          ])
-        }, 2000)
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
+            },
+          ]);
+        }, 2000);
       },
       // 获取诊断拖拽表格
       requestDiagnosTreeTable(callback, formInline) {
-        console.log('点击字段', formInline)
+        console.log("点击字段", formInline);
         setTimeout(() => {
           callback([
             // 必须纯在唯一id 和 children 和 parentId
             {
               id: 1,
               parentId: 0,
-              bse_type: '中医诊断',
-              bse_categery: '入院诊断',
-              bse_disease_name: '肾虚',
-              bse_disease_name_desc: '病描述',
-              bse_symptom_name: '症名',
-              bse_symptom_name_desc: '症描述',
-              bse_diagnose_name: '',
-              bse_diagnose_name_desc: '',
+              bse_type: "中医诊断",
+              bse_categery: "入院诊断",
+              bse_disease_name: "肾虚",
+              bse_disease_name_desc: "病描述",
+              bse_symptom_name: "症名",
+              bse_symptom_name_desc: "症描述",
+              bse_diagnose_name: "",
+              bse_diagnose_name_desc: "",
               children: [
                 {
                   id: 11,
                   parentId: 1,
-                  bse_type: '中医诊断',
-                  bse_categery: '入院诊断',
-                  bse_disease_name: '子病',
-                  bse_disease_name_desc: '病描述',
-                  bse_symptom_name: '一期症名',
-                  bse_symptom_name_desc: '症描述',
-                  bse_diagnose_name: '',
-                  bse_diagnose_name_desc: '',
+                  bse_type: "中医诊断",
+                  bse_categery: "入院诊断",
+                  bse_disease_name: "子病",
+                  bse_disease_name_desc: "病描述",
+                  bse_symptom_name: "一期症名",
+                  bse_symptom_name_desc: "症描述",
+                  bse_diagnose_name: "",
+                  bse_diagnose_name_desc: "",
                   children: [
                     {
                       id: 111,
                       parentId: 11,
-                      bse_type: '中医诊断',
-                      bse_categery: '入院诊断',
-                      bse_disease_name: '子子病',
-                      bse_disease_name_desc: '病描述',
-                      bse_symptom_name: '二期症名',
-                      bse_symptom_name_desc: '症描述',
-                      bse_diagnose_name: '',
-                      bse_diagnose_name_desc: ''
-                    }
-                  ]
-                }
-              ]
+                      bse_type: "中医诊断",
+                      bse_categery: "入院诊断",
+                      bse_disease_name: "子子病",
+                      bse_disease_name_desc: "病描述",
+                      bse_symptom_name: "二期症名",
+                      bse_symptom_name_desc: "症描述",
+                      bse_diagnose_name: "",
+                      bse_diagnose_name_desc: "",
+                    },
+                  ],
+                },
+              ],
             },
             {
               id: 2,
               parentId: 0,
-              bse_type: '中医诊断',
-              bse_categery: '入院诊断',
-              bse_disease_name: '巨唇',
-              bse_disease_name_desc: '病描述',
-              bse_symptom_name: '症名',
-              bse_symptom_name_desc: '症描述',
-              bse_diagnose_name: '',
-              bse_diagnose_name_desc: ''
+              bse_type: "中医诊断",
+              bse_categery: "入院诊断",
+              bse_disease_name: "巨唇",
+              bse_disease_name_desc: "病描述",
+              bse_symptom_name: "症名",
+              bse_symptom_name_desc: "症描述",
+              bse_diagnose_name: "",
+              bse_diagnose_name_desc: "",
             },
             {
               id: 3,
               parentId: 0,
-              bse_type: '西医诊断',
-              bse_categery: '出院诊断',
-              bse_disease_name: '',
-              bse_disease_name_desc: '',
-              bse_symptom_name: '',
-              bse_symptom_name_desc: '',
-              bse_diagnose_name: '西医诊断',
-              bse_diagnose_name_desc: '西医诊断描述',
+              bse_type: "西医诊断",
+              bse_categery: "出院诊断",
+              bse_disease_name: "",
+              bse_disease_name_desc: "",
+              bse_symptom_name: "",
+              bse_symptom_name_desc: "",
+              bse_diagnose_name: "西医诊断",
+              bse_diagnose_name_desc: "西医诊断描述",
               children: [
                 {
                   id: 31,
                   parentId: 3,
-                  bse_type: '西医诊断',
-                  bse_categery: '出院诊断',
-                  bse_disease_name: '不适',
-                  bse_disease_name_desc: '',
-                  bse_symptom_name: '',
-                  bse_symptom_name_desc: '',
-                  bse_diagnose_name: '西医诊断',
-                  bse_diagnose_name_desc: '西医诊断描述',
+                  bse_type: "西医诊断",
+                  bse_categery: "出院诊断",
+                  bse_disease_name: "不适",
+                  bse_disease_name_desc: "",
+                  bse_symptom_name: "",
+                  bse_symptom_name_desc: "",
+                  bse_diagnose_name: "西医诊断",
+                  bse_diagnose_name_desc: "西医诊断描述",
                   children: [
                     {
                       id: 333,
                       parentId: 31,
-                      bse_type: '西医诊断',
-                      bse_categery: '出院诊断',
-                      bse_disease_name: '嗜睡',
-                      bse_disease_name_desc: '',
-                      bse_symptom_name: '',
-                      bse_symptom_name_desc: '',
-                      bse_diagnose_name: '西医诊断',
-                      bse_diagnose_name_desc: '西医诊断描述'
-                    }
-                  ]
+                      bse_type: "西医诊断",
+                      bse_categery: "出院诊断",
+                      bse_disease_name: "嗜睡",
+                      bse_disease_name_desc: "",
+                      bse_symptom_name: "",
+                      bse_symptom_name_desc: "",
+                      bse_diagnose_name: "西医诊断",
+                      bse_diagnose_name_desc: "西医诊断描述",
+                    },
+                  ],
                 },
                 {
                   id: 32,
                   parentId: 3,
-                  bse_type: '西医诊断',
-                  bse_categery: '出院诊断',
-                  bse_disease_name: '',
-                  bse_disease_name_desc: '',
-                  bse_symptom_name: '',
-                  bse_symptom_name_desc: '',
-                  bse_diagnose_name: '西医诊断',
-                  bse_diagnose_name_desc: '西医诊断描述'
-                }
-              ]
+                  bse_type: "西医诊断",
+                  bse_categery: "出院诊断",
+                  bse_disease_name: "",
+                  bse_disease_name_desc: "",
+                  bse_symptom_name: "",
+                  bse_symptom_name_desc: "",
+                  bse_diagnose_name: "西医诊断",
+                  bse_diagnose_name_desc: "西医诊断描述",
+                },
+              ],
             },
             {
               id: 4,
               parentId: 0,
-              bse_type: '西医诊断',
-              bse_categery: '临床诊断',
-              bse_disease_name: '',
-              bse_disease_name_desc: '',
-              bse_symptom_name: '',
-              bse_symptom_name_desc: '',
-              bse_diagnose_name: '西医诊断',
-              bse_diagnose_name_desc: '西医诊断描述'
-            }
-          ])
-        }, 2000)
+              bse_type: "西医诊断",
+              bse_categery: "临床诊断",
+              bse_disease_name: "",
+              bse_disease_name_desc: "",
+              bse_symptom_name: "",
+              bse_symptom_name_desc: "",
+              bse_diagnose_name: "西医诊断",
+              bse_diagnose_name_desc: "西医诊断描述",
+            },
+          ]);
+        }, 2000);
       },
       // 获取常用诊断
       requestDiagnosCommonlyTable(callback, formInline) {
-        console.log('点击字段', formInline)
+        console.log("点击字段", formInline);
         setTimeout(() => {
           callback([
             {
-              code: '1',
-              name: '个人常用诊断',
-              memo: '临床初步诊断',
+              code: "1",
+              name: "个人常用诊断",
+              memo: "临床初步诊断",
               children: [
                 {
-                  code: '1.1',
-                  name: '门诊诊断',
-                  memo: '临床初步诊断'
-                }
-              ]
+                  code: "1.1",
+                  name: "门诊诊断",
+                  memo: "临床初步诊断",
+                },
+              ],
             },
             {
-              code: '2',
-              name: '科室常用诊断',
-              memo: '临床初步诊断',
+              code: "2",
+              name: "科室常用诊断",
+              memo: "临床初步诊断",
               children: [
                 {
-                  code: '2.1',
-                  name: '科室常用门诊诊断',
-                  memo: '临床初步诊断'
-                }
-              ]
-            }
-          ])
-        }, 2000)
+                  code: "2.1",
+                  name: "科室常用门诊诊断",
+                  memo: "临床初步诊断",
+                },
+              ],
+            },
+          ]);
+        }, 2000);
       },
       // 获取常用子诊断分类
       requestDiagnosTableChildren(callback, formInline) {
-        console.log('点击字段', formInline)
+        console.log("点击字段", formInline);
         setTimeout(() => {
           callback([
             {
-              code: '类型',
-              name: '分类',
-              memo: '备注'
-            }
-          ])
-        }, 2000)
+              code: "类型",
+              name: "分类",
+              memo: "备注",
+            },
+          ]);
+        }, 2000);
       },
       /* 诊断接口定义 */
       /* 手术接口定义 */
       requestSurgeryTreeTable(callback, formInline) {
-        console.log('点击字段', formInline)
+        console.log("点击字段", formInline);
         setTimeout(() => {
           callback([
             {
-              type: '类型',
-              code: '手术编码',
-              name: '手术名称',
-              surgeryLevel: '手术等级',
-              anesthesia: '麻醉方法'
-            }
-          ])
-        }, 2000)
+              type: "类型",
+              code: "手术编码",
+              name: "手术名称",
+              surgeryLevel: "手术等级",
+              anesthesia: "麻醉方法",
+            },
+          ]);
+        }, 2000);
       },
       requestSurgeryField(callback, param, formInline) {
-        console.log('点击字段', param, formInline)
+        console.log("点击字段", param, formInline);
         setTimeout(() => {
           callback([
             {
-              code: '1',
-              name: '门诊诊断',
-              memo: '临床初步诊断'
-            }
-          ])
-        })
-      }
+              code: "1",
+              name: "门诊诊断",
+              memo: "临床初步诊断",
+            },
+          ]);
+        });
+      },
       /* 手术接口定义 */
-    }))
+      /* 级联选项接口 */
+      requestCascaderBindOptions(callback, formInline) {
+        callback([
+          {
+            id: 0,
+            value: "zhinan",
+            label: "指南",
+            children: [
+              {
+                id: 2,
+                value: "shejiyuanze",
+                label: "设计原则",
+                children: [
+                  {
+                    id: 4,
+                    value: "yizhi",
+                    label: "一致",
+                  },
+                  {
+                    id: 5,
+                    value: "fankui",
+                    label: "反馈",
+                  },
+                  {
+                    id: 6,
+                    value: "xiaolv",
+                    label: "效率",
+                  },
+                  {
+                    id: 7,
+                    value: "kekong",
+                    label: "可控",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 3,
+            value: "daohang",
+            label: "导航",
+            children: [
+              {
+                id: 8,
+                value: "cexiangdaohang",
+                label: "侧向导航",
+              },
+              {
+                id: 10,
+                value: "dingbudaohang",
+                label: "顶部导航",
+              },
+            ],
+          },
+        ]);
+      },
+      /* 级联选项接口 */
+    }));
     /* 诊断接口定义 */
     // 查询诊断
-    instance.addListener('serachDiagnose', (payload, callback) => {
-      console.log(payload)
+    instance.addListener("serachDiagnose", (payload, callback) => {
+      console.log(payload);
       setTimeout(() => {
         callback(
           {
             status: 200,
             data: [],
-            msg: '查询诊断成功'
+            msg: "查询诊断成功",
           },
           2000
-        )
-      })
-    })
+        );
+      });
+    });
     // 设为常用诊断
-    instance.addListener('setCommonlyDiagnose', (payload, callback) => {
-      console.log(payload)
+    instance.addListener("setCommonlyDiagnose", (payload, callback) => {
+      console.log(payload);
       setTimeout(() => {
         callback({
           status: 200,
           data: [],
-          msg: '设置常用诊断成功'
-        })
-      }, 2000)
-    })
+          msg: "设置常用诊断成功",
+        });
+      }, 2000);
+    });
     // 保存诊断
-    instance.addListener('saveDiagnoseList', (payload, callback) => {
-      console.log('保存诊断', payload)
+    instance.addListener("saveDiagnoseList", (payload, callback) => {
+      console.log("保存诊断", payload);
       setTimeout(() => {
         callback({
           status: 200,
           data: [],
-          msg: '保存诊断列表成功'
-        })
-      }, 2000)
-    })
+          msg: "保存诊断列表成功",
+        });
+      }, 2000);
+    });
     /* 诊断接口定义 */
     /* 手术接口定义 */
     // 设为常用手术
-    instance.addListener('setCommonlySurgery', (payload, callback) => {
-      console.log(payload)
+    instance.addListener("setCommonlySurgery", (payload, callback) => {
+      console.log(payload);
       setTimeout(() => {
         callback({
           status: 200,
           data: [],
-          msg: '设置常用诊断成功'
-        })
-      }, 2000)
-    })
+          msg: "设置常用诊断成功",
+        });
+      }, 2000);
+    });
     /* 手术接口定义 */
   },
   methods: {
     setContent() {
-      this._instance.setContent('<dnf bse="%7B%22module%22%3A%22composeEle%22%2C%22name%22%3A%22333%22%2C%22id%22%3A%22333%22%7D" class="bse-element"><span class="bse-element" bse-left="" bse-right="" style="font-weight: bold" bse="%7B%22notallowdelete%22%3Atrue%2C%22contenteditable%22%3Afalse%2C%22type%22%3A%22label%22%2C%22name%22%3A%22111%22%2C%22id%22%3A%221111%22%2C%22placeholder%22%3A%221111%22%2C%22value%22%3A%2211111%22%7D" contenteditable="false"><label contenteditable="true" class="placehold-class" placeholder="1111">11111</label></span>​<span class="bse-element" bse-left="[" bse-right="]" bse="%7B%22forceUpdateWay%22%3A%22%22%2C%22type%22%3A%22input%22%2C%22name%22%3A%22222%22%2C%22id%22%3A%22222%22%2C%22value%22%3A%222222%22%7D" contenteditable="false"><label contenteditable="true" class="placehold-class" placeholder="">2222</label></span>​</dnf>')
+      this._instance.setContent(
+        '<dnf bse="%7B%22module%22%3A%22composeEle%22%2C%22name%22%3A%22333%22%2C%22id%22%3A%22333%22%7D" class="bse-element"><span class="bse-element" bse-left="" bse-right="" style="font-weight: bold" bse="%7B%22notallowdelete%22%3Atrue%2C%22contenteditable%22%3Afalse%2C%22type%22%3A%22label%22%2C%22name%22%3A%22111%22%2C%22id%22%3A%221111%22%2C%22placeholder%22%3A%221111%22%2C%22value%22%3A%2211111%22%7D" contenteditable="false"><label contenteditable="true" class="placehold-class" placeholder="1111">11111</label></span>​<span class="bse-element" bse-left="[" bse-right="]" bse="%7B%22forceUpdateWay%22%3A%22%22%2C%22type%22%3A%22input%22%2C%22name%22%3A%22222%22%2C%22id%22%3A%22222%22%2C%22value%22%3A%222222%22%7D" contenteditable="false"><label contenteditable="true" class="placehold-class" placeholder="">2222</label></span>​</dnf>'
+      );
     },
     getContent() {
-      this._tempHtml = this._instance.getContent()
+      this._tempHtml = this._instance.getContent();
     },
     getContentFocus() {
-      this._instance.getEditorAreaFocus()
+      this._instance.getEditorAreaFocus();
     },
     // 获取文本内容
     getInnerContent() {
-      console.log(this._instance.getContent())
+      console.log(this._instance.getContent());
     },
 
     addTab() {
       this.editableTabs.push({
-        title: 'New Tab',
-        content: 'New Tab content'
-      })
+        title: "New Tab",
+        content: "New Tab content",
+      });
     },
 
-    handlerChangeModule() {
-      
-    },
+    handlerChangeModule() {},
 
     // 组合元素弹窗
-    composeElement(module = 'moduleEle') {
+    composeElement(module = "moduleEle") {
       /**
        * 组合元素弹框
        * @param {String} 事件名
        * @param {Object} 参数
        * @param {Boolean} dialog确认回调函数
        */
-      this._instance.execCommand('composeelementdialog', { module }, (payload, formInline) => {
-        const download_html = fileName => {
-          const pom = document.createElement('a')
-          pom.setAttribute('href', 'data:html/plain;charset=utf-8,' + encodeURIComponent(payload))
-          pom.setAttribute('download', fileName + '.html')
-          if (document.createEvent) {
-            const event = document.createEvent('MouseEvents')
-            event.initEvent('click', true, true)
-            pom.dispatchEvent(event)
-          } else {
-            pom.click()
-          }
+      this._instance.execCommand(
+        "composeelementdialog",
+        { module },
+        (payload, formInline) => {
+          const download_html = (fileName) => {
+            const pom = document.createElement("a");
+            pom.setAttribute(
+              "href",
+              "data:html/plain;charset=utf-8," + encodeURIComponent(payload)
+            );
+            pom.setAttribute("download", fileName + ".html");
+            if (document.createEvent) {
+              const event = document.createEvent("MouseEvents");
+              event.initEvent("click", true, true);
+              pom.dispatchEvent(event);
+            } else {
+              pom.click();
+            }
+          };
+          download_html(formInline.name);
         }
-        download_html(formInline.name)
-      })
+      );
     },
 
     // 外部调用诊断控件
     diagnoseElement() {
       this._instance.execCommand(
-        'diagnoseelementdialog',
+        "diagnoseelementdialog",
         {
           attr: {
-            type: 'diagnose',
+            type: "diagnose",
             bse_multipleSelection: [
               {
                 id: 333,
                 parentId: 31,
                 bse_code: 1,
-                bse_type: '西医诊断',
-                bse_categery: '出院诊断',
-                bse_diagnose_name: '诊断',
-                bse_diagnose_name_desc: '诊断描述',
-                bse_disease_name: '嗜睡',
-                bse_disease_name_desc: '病描述',
-                bse_symptom_name: '',
-                bse_symptom_name_desc: '症描述',
+                bse_type: "西医诊断",
+                bse_categery: "出院诊断",
+                bse_diagnose_name: "诊断",
+                bse_diagnose_name_desc: "诊断描述",
+                bse_disease_name: "嗜睡",
+                bse_disease_name_desc: "病描述",
+                bse_symptom_name: "",
+                bse_symptom_name_desc: "症描述",
                 level: 3,
                 order: 0,
-                _path: '0/0/0'
-              }
-            ]
-          }
+                _path: "0/0/0",
+              },
+            ],
+          },
         },
-        payload => {
-          console.log(payload)
+        (payload) => {
+          console.log(payload);
         }
-      )
+      );
     },
 
     // 外部调用手术控件
     surgeryElement() {
       this._instance.execCommand(
-        'surgeryelementdialog',
+        "surgeryelementdialog",
         {
           attr: {
-            type: 'surgery',
+            type: "surgery",
             bse_surgeryList: [
               {
-                type: '类型',
-                anesthesia: '麻醉方法',
-                code: '手术编码',
-                name: '手术名称',
-                surgeryLevel: '手术等级',
-                id: 'bse_0',
-                date: '2022-07-06'
-              }
-            ]
-          }
+                type: "类型",
+                anesthesia: "麻醉方法",
+                code: "手术编码",
+                name: "手术名称",
+                surgeryLevel: "手术等级",
+                id: "bse_0",
+                date: "2022-07-06",
+              },
+            ],
+          },
         },
-        payload => {
-          console.log(payload)
+        (payload) => {
+          console.log(payload);
         }
-      )
+      );
     },
 
     // 验证数据
     validateRules() {
-      this._instance.execCommand('validaterules', payload => {
-        console.log(payload)
-      })
+      this._instance.execCommand("validaterules", (payload) => {
+        console.log(payload);
+      });
     },
 
     // 插入内容
@@ -750,26 +903,26 @@ export default {
 			</label></span>​</p></td></tr><tr data-cache-id="1e9cff3b-59e9-4beb-910a-3418281b1fd5" _="1m3-oNMJGMQQ8i_X"><td colspan="1" rowspan="1" style="border: 1px dashed rgb(204, 204, 204); word-break: break-all; vertical-align: middle; height: 78.9688px;" data-cache-id="e8ed439f-6094-4bd2-b092-46fea71a7fad" valign="middle" align="center" _="lLKftLkmtT_j4bje"><p _="IsdPA20GfA7ibqGw"><br></p><p data-cache-id="7f6ecfd0-2cd4-4185-87bd-4bc8c40011cb" _="4XHdIg8lAtgsY4FI">结果解读</p><p _="jiCBKm9qUg-Io1Xa"><br></p></td><td colspan="2" rowspan="1" style="border: 1px dashed rgb(204, 204, 204); word-break: break-all; height: 78.9688px;" data-cache-id="7769958e-52cc-4b72-9245-cb1ebb1e848c" _="JbyWxmqt7_q4JZQx"><p _="5D88frIp2aK5N6E0"><br></p><p data-cache-id="23d8164c-8427-486b-aac9-e27f0d830caa" _="pTDXsZmGSB7SXNpW">&lt;25分 低风险</p><p data-cache-id="23d8164c-8427-486b-aac9-e27f0d830caa" _="u45-dT2cZrLC9JWU">20-45分 中风险</p><p data-cache-id="23d8164c-8427-486b-aac9-e27f0d830caa" _="0lJD1aPaX04HUUX3">≥&nbsp;45分 高风险</p></td></tr></tbody></table><p data-cache-id="ddd102c3-7dd0-4807-9e96-24a77082eb74" _="gKe-TzCMBEDULDqO"><br data-cache-id="1fb7da94-f67a-410d-9454-04d594741309"></p><p _="rELVgoJRShHr0fW_"><br></p><p _="hbJeHSTzsBEAI-Dd"><br></p><p _="jKGCaPQVDmVEcaq_"><br></p>
 		</html>
 		</data>
-		</xml>`
+		</xml>`;
 
       this._instance.execCommand(
-        'insertxmlorhtmlmodulestring',
-        { contentXmlOrHtmlString: strings, paper: 'A6' },
-        payload => {
-          console.log(payload)
+        "insertxmlorhtmlmodulestring",
+        { contentXmlOrHtmlString: strings, paper: "A6" },
+        (payload) => {
+          console.log(payload);
         }
-      )
+      );
     },
 
     // 获取xml或html字符串
     getXmlorhtmlString() {
       this._instance.execCommand(
-        'getexportxmlorhtmlstring',
-        { version: '4.0', htmlstring: true }, // 定义数据版本号
-        payload => {
-          console.log(payload)
+        "getexportxmlorhtmlstring",
+        { version: "4.0", htmlstring: true }, // 定义数据版本号
+        (payload) => {
+          console.log(payload);
         }
-      )
+      );
     },
 
     // 插入段落元素
@@ -779,64 +932,64 @@ export default {
                   </label></span>​<br></p><p _="VYhnOtnoxpn7GFcQ">手术编码<span class="bse-element" bse-left="[" bse-right="]" contenteditable="false" bse="%7B%22type%22%3A%22surgery%22%2C%22fieldName%22%3A%22code%22%2C%22name%22%3A%22%E6%89%8B%E6%9C%AF%E6%8E%A7%E4%BB%B6id%22%2C%22id%22%3A%22%E6%89%8B%E6%9C%AF%E6%8E%A7%E4%BB%B6id%22%2C%22bse_surgeryList%22%3A%5B%7B%22id%22%3A%220%22%2C%22type%22%3A%22%E7%B1%BB%E5%9E%8B%22%2C%22code%22%3A%22%E6%89%8B%E6%9C%AF%E7%BC%96%E7%A0%8101%22%2C%22name%22%3A%22%E7%AC%AC%E4%B8%80%E5%8F%B0%E6%89%8B%E6%9C%AF%22%2C%22date%22%3A%222016-05-04%22%2C%22surgeryLevel%22%3A%22%E6%89%8B%E6%9C%AF%E7%AD%89%E7%BA%A7%22%2C%22doctor%22%3A%22%E6%9C%AF%E8%80%85%22%2C%22firstAssistant%22%3A%22%E4%B8%80%E5%8A%A9%22%2C%22secondAssistant%22%3A%22%E4%BA%8C%E5%8A%A9%22%2C%22incisionLevel%22%3A%22%E5%88%87%E5%8F%A3%E7%AD%89%E7%BA%A7%22%2C%22healingLevel%22%3A%22%E6%84%88%E5%90%88%E7%AD%89%E7%BA%A7%22%2C%22anesthesia%22%3A%22%E9%BA%BB%E9%86%89%E6%96%B9%E6%B3%95%22%2C%22anesthesiologist%22%3A%22%E9%BA%BB%E9%86%89%E5%8C%BB%E5%B8%88%22%7D%5D%7D"><label style="display: inline-block;" contenteditable="true" class="placehold-class" placeholder="">手术编码01</label></span>​</p><p _="B0eJoJz9js1DRKU-">​手术类型<span class="bse-element" bse-left="[" bse-right="]" contenteditable="false" bse="%7B%22type%22%3A%22surgery%22%2C%22name%22%3A%22%E6%89%8B%E6%9C%AF%E6%8E%A7%E4%BB%B6id%22%2C%22id%22%3A%22%E6%89%8B%E6%9C%AF%E6%8E%A7%E4%BB%B6id%22%2C%22fieldName%22%3A%22type%22%7D"><label style="display: inline-block;" contenteditable="true" class="placehold-class" placeholder=""></label></span>​</p><br><p _="VfdNVdLil0u6UWv6"></p>
                   
                   
-                  `
+                  `;
 
       this._instance.execCommand(
-        'inserthtmlorxmlstringbyparams',
+        "inserthtmlorxmlstringbyparams",
         {
           初步诊断元素: [
             {
               id: 1,
               parentId: 0,
               bse_code: 1,
-              bse_type: '中医诊断',
-              bse_categery: '入院诊断',
-              bse_disease_name: '肾虚',
-              bse_disease_name_desc: '病描述',
-              bse_symptom_name: '症名',
-              bse_symptom_name_desc: '症描述',
-              bse_diagnose_name: '',
-              bse_diagnose_name_desc: '',
+              bse_type: "中医诊断",
+              bse_categery: "入院诊断",
+              bse_disease_name: "肾虚",
+              bse_disease_name_desc: "病描述",
+              bse_symptom_name: "症名",
+              bse_symptom_name_desc: "症描述",
+              bse_diagnose_name: "",
+              bse_diagnose_name_desc: "",
               open: true,
-              checked: true
+              checked: true,
             },
             {
               id: 11,
               parentId: 1,
               bse_code: 12,
-              bse_type: '中医诊断',
-              bse_categery: '入院诊断',
-              bse_disease_name: '子病',
-              bse_disease_name_desc: '病描述',
-              bse_symptom_name: '一期症名',
-              bse_symptom_name_desc: '症描述',
-              bse_diagnose_name: '',
-              bse_diagnose_name_desc: '',
+              bse_type: "中医诊断",
+              bse_categery: "入院诊断",
+              bse_disease_name: "子病",
+              bse_disease_name_desc: "病描述",
+              bse_symptom_name: "一期症名",
+              bse_symptom_name_desc: "症描述",
+              bse_diagnose_name: "",
+              bse_diagnose_name_desc: "",
               open: true,
-              checked: true
+              checked: true,
             },
             {
               id: 111,
               parentId: 11,
               bse_code: 123,
-              bse_type: '中医诊断',
-              bse_categery: '入院诊断',
-              bse_disease_name: '子子病',
-              bse_disease_name_desc: '病描述',
-              bse_symptom_name: '二期症名',
-              bse_symptom_name_desc: '症描述',
-              bse_diagnose_name: '',
-              bse_diagnose_name_desc: '',
+              bse_type: "中医诊断",
+              bse_categery: "入院诊断",
+              bse_disease_name: "子子病",
+              bse_disease_name_desc: "病描述",
+              bse_symptom_name: "二期症名",
+              bse_symptom_name_desc: "症描述",
+              bse_diagnose_name: "",
+              bse_diagnose_name_desc: "",
               open: true,
-              checked: true
-            }
+              checked: true,
+            },
           ],
           年龄元素: 28,
-          姓名元素: '苏苏苏'
+          姓名元素: "苏苏苏",
         },
         {
           contentXmlOrHtmlString: strings,
-          paper: 'A4',
+          paper: "A4",
           pagesizes: {
             w: 210, // 整个宽
             h: 697, // 整个高
@@ -845,50 +998,50 @@ export default {
             pl: 15, // 页边距 左
             pr: 15, // 页边距 右
             hh: 6.6, // 页眉
-            fh: 14 // 页脚
-          }
+            fh: 14, // 页脚
+          },
         },
-        payload => {
-          console.log(payload)
+        (payload) => {
+          console.log(payload);
         }
-      )
+      );
     },
 
     // 切换编辑器模式
     switchEditorMode(name) {
       this._instance.execCommand(
-        'mode',
+        "mode",
         name, // 定义编辑器模式
-        payload => {
-          console.log(payload)
+        (payload) => {
+          console.log(payload);
         }
-      )
+      );
     },
     switchEditorModePaper(name) {
       this._instance.execCommand(
-        'paper',
+        "paper",
         { paper: name }, // 定义编辑器模式
-        payload => {
-          console.log(payload)
+        (payload) => {
+          console.log(payload);
         }
-      )
+      );
     },
 
     // 更新数据内容
     updateApiDate() {
       this._instance.execCommand(
-        'updatedocumentbyparams',
+        "updatedocumentbyparams",
         {
-          'h1': '苏苏苏',
-          'h2': 28
+          h1: "苏苏苏",
+          h2: 28,
         },
-        payload => {
-          console.log(payload)
+        (payload) => {
+          console.log(payload);
         }
-      )
-    }
-  }
-}
+      );
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -926,4 +1079,3 @@ ul li {
   height: 500px;
 }
 </style>
-
