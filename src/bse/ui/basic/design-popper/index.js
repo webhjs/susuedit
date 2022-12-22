@@ -75,7 +75,13 @@ const designPopperBubble = {
     designPopperBubble.bindEvent(opts, componentInstance)
     return componentInstance
   },
+  hideAll() {
+    POOLS.forEach(pl => {
+      pl.componentInstance?.hide()
+    })
+  },
   bindEvent(opts, instance) {
+    designPopperBubble.hideAll()
     let timmer
     const callBack = (e) => {
       const el = e.target
