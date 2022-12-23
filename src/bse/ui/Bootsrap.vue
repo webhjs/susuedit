@@ -8,9 +8,9 @@
   </div>
 </template>
 <script>
-import MenuBar from "./Menu-bar";
-import CommonBar from "./Common-bar";
-import StatusBar from "./Status-bar";
+import MenuBar from "./menu-bar";
+import CommonBar from "./common-bar";
+import StatusBar from "./status-bar";
 import AttributeDialog from "@/bse/element/common/AttributeDialog";
 
 /* js调用组件 */

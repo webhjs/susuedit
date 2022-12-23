@@ -9,7 +9,7 @@
 </template>
 
 <script>
-const modulesFiles = require.context("@bse/ui/Common-bar/components", true, /\.vue$/);
+const modulesFiles = require.context("@bse/ui/common-bar/components", true, /\.vue$/);
 const commonBarComponents = modulesFiles.keys().reduce((modules, modulePath) => {
   const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, "$1");
   const value = modulesFiles(modulePath);
