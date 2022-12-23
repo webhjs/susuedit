@@ -39,7 +39,7 @@ const htmlStr = `<!DOCTYPE html>
             </div>
             <div class="flex bse-page_footer" contenteditable="false">
               <div class="flex-1 bse-footer_editable" contenteditable="true">
-                页脚
+                第 1 页 / 共 1 页
               </div>
             </div>
           </div>
