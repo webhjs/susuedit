@@ -1,0 +1,6 @@
+chrome >= 36
+not ie <= 8
+iOS >= 6
+ie 11
+Android > 4.1
+Firefox > 20

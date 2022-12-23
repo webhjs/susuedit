@@ -1,98 +1,228 @@
 /*
- * @name:
- * @Descripttion:
- * @Author: Morning
- * @Date: 2021-03-27 13:41:12
- * @LastEditors: 金苏
- * @LastEditTime: 2021-09-18 16:15:56
+ * @Description: webpack配置
+ * @Author bianpengfei
+ * @create 2022/4/10 17:48
  */
-"use strict";
-const path = require("path");
+const path = require('path')
+const webpack = require('webpack')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CopyPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { LIB_HOME, IS_PRO, ROOT_PATH, IS_LIB, LIB_OUTPUT, APP_OUTPUT } = require('./build/utils')
 
-function resolve(dir) {
-  return path.join(__dirname, dir);
+
+const publicPath = IS_PRO ? './' : './'
+const outputDir = IS_LIB ? LIB_OUTPUT : APP_OUTPUT
+
+/**
+ * 动态的插入ejs html
+ * @type {{css: *[], external: string[], title: string, script: string[]}}
+ */
+const inject = {
+  external: {
+    // 'element-ui': 'ELEMENT'
+  },
+  minify: false, // 是否压缩html
+  gzip: false, // 是否开启gzip
+  script: [],
+  css: [],
+  dll: [], // dll
+  title: '曼荼罗电子病历编辑器'
 }
 
-// const CopyWebpackPlugin = require("copy-webpack-plugin");
-
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // 分析包
-
-// externals: {
-//   vue: 'Vue',
-//   vuex: 'Vuex',
-//   'vue-router': 'VueRouter',
-//   axios: 'axios',
-//   'element-ui': 'ELEMENT',
-//   moment: 'moment',
-//   xlsx: 'XLSX',
-//   'particles.js': 'pJS',
-//   html2canvas: 'html2canvas',
-//   jquery: 'jQuery',
-//   viewerjs: 'Viewer',
-//   clipboard: 'ClipboardJS',
-//   nprogress: 'NProgress'
-// },
-
-// cdn链接
-const cdn = {
-  // cdn：模块名称和模块作用域命名（对应window里面挂载的变量名称）
-  externals: {
-    // vue: 'Vue',
-    // vuex: 'Vuex',
-    // 'vue-router': 'VueRouter',
-    // axios: 'axios',
-    // 'element-ui': 'ELEMENT',
-    BMap: "BMap",
-  },
-  // cdn的css链接
-  css: [
-    "https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.3/theme-chalk/index.min.css",
-  ],
-  // cdn的js链接
-  js: [
-    "https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js",
-    "https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.min.js",
-    "https://cdn.bootcdn.net/ajax/libs/vuex/3.6.2/vuex.min.js",
-    "https://cdn.bootcdn.net/ajax/libs/axios/0.20.0/axios.min.js",
-    "https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.3/index.min.js",
-    "http://api.map.baidu.com/api?v=2.0&ak=gMjlNwT7b8m4Vv6Lz6oeV1jN7N7Yv0Y2",
-  ],
-};
-
 module.exports = {
-  lintOnSave: false,
-  configureWebpack: {
-    resolve: {
-      // 路径别名
-      alias: {
-        "@": resolve("src"),
-        "@bse": resolve("src/bse")
-      }
-    },
-  },
-  productionSourceMap: false, // 生产生成 sourceMap 文件
-  // "http://192.168.21.74:12699",
-  // "http://192.168.8.19:30221",
-  // "http://192.168.0.194:12698/",
-  // "http://192.168.8.117:80"
-  // "http://192.168.8.117:7997"
-  // "http://192.168.21.74:7997/",
-  // "http://www.app.dubcat.cn:8081/"
   devServer: {
-    open: true,
-    proxy: {
-      // 代理
-      "/api": {
-        target: "http://www.app.dubcat.cn:8081/",
-        ws: true,
-        changOrigin: true,
-        pathRewrite: {
-          "^/api": "",
-        },
-        // cookiePathRewrite: { // 是否携带cookie
-        //      '/svc-prod-app': '/'
-        // }
-      },
-    },
+    port: 2829,
+    host: '0.0.0.0',
+    contentBase: [`${ROOT_PATH}/public`, `${ROOT_PATH}/src/bse`]
   },
-};
+  publicPath,
+  assetsDir: 'static',
+  outputDir,
+  productionSourceMap: false,
+  css: {
+    extract: (() => {
+      return IS_PRO
+    })(),
+    sourceMap: !IS_PRO // 是否开启 CSS source map  这里开发环境下开启
+  },
+
+  runtimeCompiler: true,
+
+  lintOnSave: false,
+
+  // 第三方插件配置
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'scss',
+      patterns: [
+        path.join(ROOT_PATH, 'src/libs/style/app/variables.scss'),
+        path.join(ROOT_PATH, 'src/libs/style/app/mixin.scss')
+      ]
+    }
+  },
+
+  chainWebpack: config => {
+    if (IS_PRO) {
+      // 生产环境
+      if (process.argv.includes('--report')) {
+        config.plugin('bundleAnalyzerPlugin').use(BundleAnalyzerPlugin)
+      }
+      // 设置去除console
+      config.optimization.minimizer('terser').tap(args => {
+        args[0].terserOptions.compress.drop_console = true
+        return args
+      })
+
+      config.entryPoints.get('app').clear().add(path.join(ROOT_PATH, 'src/main.js'))
+      // .add('@bianpengfei/utils')
+
+      if (IS_LIB) {
+        // 库模式
+        config.output
+          .libraryTarget('umd')
+          .libraryExport('default')
+          // .library('BSE')
+          .umdNamedDefine(true)
+          .globalObject("typeof self !== 'undefined' ? self : this")
+
+        config.externals(inject.external)
+        // config.plugin('bundleAnalyzerPlugin').use(BundleAnalyzerPlugin)
+
+        // 打包成 base64
+        config.module
+          .rule('fonts')
+          .use('url-loader')
+          .tap(options => {
+            options.limit = undefined
+            return options
+          })
+          .end()
+          .end()
+          .rule('images')
+          .use('url-loader')
+          .tap(options => {
+            options.limit = undefined
+            return options
+          })
+          .end()
+          .end()
+          .rule('media')
+          .use('url-loader')
+          .tap(options => {
+            options.limit = undefined
+            return options
+          })
+      } else {
+        // 非库模式
+        config.plugin('html').tap(args => {
+          args[0].script = inject.script
+          args[0].css = inject.css
+          args[0].title = inject.title
+          args[0].minify = inject.minify
+          return args
+        })
+
+        config.plugin('copyLibPlugin').use(CopyPlugin, [
+          [
+            {
+              from: `${LIB_HOME}/theme`,
+              to: `${outputDir}/theme`,
+              toType: 'dir',
+              ignore: [
+                '.DS_Store',
+                {
+                  glob: 'index.html',
+                  matchBase: false
+                }
+              ]
+            }
+          ]
+        ])
+
+        config.optimization.splitChunks({
+          chunks: 'all',
+          cacheGroups: {
+            libs: {
+              name: 'chunk-libs',
+              test: /[\\/]node_modules[\\/]/,
+              priority: 10,
+              chunks: 'initial' // only package third parties that are initially dependent
+            }
+          }
+        })
+      }
+    } else {
+      // 开发环境 .entryPoints.delete('app')
+      config.entry('iframe').add(path.resolve(LIB_HOME, 'theme/index.js'))
+      config
+        .plugin('htmlWebpackPluginIframe')
+        .use(HtmlWebpackPlugin, [
+          {
+            chunks: ['chunk-vendors', 'iframe'],
+            filename: 'iframe.html',
+            hash: true,
+            template: path.resolve(ROOT_PATH, 'public/iframe.html')
+          }
+        ])
+        .end()
+        .plugin('html')
+        .tap(args => {
+          args[0].chunks = ['chunk-vendors', 'app']
+          args[0].inject = true
+          args[0].filename = 'index.html'
+          return args
+        })
+    }
+
+    /*****************开发和生产环境都生效**********************/
+    config.resolve.alias
+      .set('@root', ROOT_PATH)
+      .set('@', `${ROOT_PATH}/src`)
+      .set('@libs', `${ROOT_PATH}/src/libs`)
+      .set('@bse', LIB_HOME)
+      .set('~@', `${ROOT_PATH}/src`)
+    config.resolve.symlinks(true) // 修复HMR
+    config.plugins.delete('prefetch').delete('preload')
+
+    config.resolve.mainFields.add('main').add('module')
+
+    config
+      .plugin('definePlugin')
+      .use(webpack.DefinePlugin, [
+        {
+          PUBLIC_URL: JSON.stringify(String(publicPath)) // 所有加载js文件动态前缀
+        }
+      ])
+      .end()
+      .plugin('providerPlugin')
+      .use(webpack.ProvidePlugin, [
+        {
+          // $BUtils: '@bianpengfei/utils'
+        }
+      ])
+  },
+
+  configureWebpack: config => {
+    // config.entry = {
+    //   iframe: path.resolve(LIB_HOME, 'theme/index.css')
+    // }
+    //  config.entry('iframe').add(path.resolve(LIB_HOME, 'theme/index.css')).end()
+    // 通用配置
+    // new webpack.ProvidePlugin({
+    //   _: 'lodash',
+    // }),
+    //
+    // if (IS_LIB) {
+    //   config.entry = `${LIB_HOME}/main.js`
+    //   config.output = {
+    //     ...config.output,
+    //     libraryTarget: 'umd',
+    //     libraryExport: 'default',
+    //     library: 'BSE',
+    //     umdNamedDefine: true,
+    //     globalObject: "typeof self !== 'undefined' ? self : this"
+    //   }
+    // }
+  }
+}

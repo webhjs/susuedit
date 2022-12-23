@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:lib": "vue-cli-service build --target lib --inline-vue --name BSE src/bse/index.js"
+    "build:iframe.css": "webpack --config build/webpack.iframe-css.lib.js && rimraf dist-lib/theme/index.js",
+    "build:lib": "vue-cli-service build --target lib --inline-vue --name BSE src/bse/index.js && rimraf dist-lib/BSE.common.js && rimraf dist-lib/BSE.umd.js && npm run build:iframe.css"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -44,13 +45,26 @@
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "3.6.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "friendly-errors-webpack-plugin": "1.7.0",
+    "optimize-css-assets-webpack-plugin": "5.0.4",
+    "postcss": "7.0.5",
+    "postcss-import": "12.0.1",
+    "postcss-loader": "4.3.0",
+    "postcss-preset-env": "6.7.0",
+    "progress-bar-webpack-plugin": "2.1.0",
+    "rimraf": "3.0.2",
+    "sass": "1.32.6",
+    "sass-loader": "8.0.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "svg-sprite-loader": "^3.6.2",
+    "vue-cli-plugin-style-resources-loader": "~0.1.5",
     "vue-template-compiler": "^2.6.11",
-    "webpack-bundle-analyzer": "^4.5.0"
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-chain": "4.12.1"
   },
   "eslintConfig": {
     "root": true,
@@ -65,10 +79,5 @@
       "parser": "babel-eslint"
     },
     "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  }
 }
