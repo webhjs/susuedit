@@ -709,6 +709,34 @@ function insertXmlOrHtmlModuleString(payload) {
   }
 }
 
+/**
+ * 插入页眉xml模板字符串
+ * @param payload: { contentXmlOrHtmlString: xml字符串 }
+ */
+function insertPageHeaderXmlOrHtmlString(payload) {
+  const { contentXmlOrHtmlString } = payload
+  const result = domUtils.addZeroWidth(contentXmlOrHtmlString);
+  const pageHeader = this.getEditorArea().querySelectorAll(".bse-header_editable");
+  Array.from(pageHeader).forEach(header => {
+    header.innerHTML = result
+  })
+}
+
+/**
+ * 插入页眉xml模板字符串
+ * @param headerInfo: 更新数据对象
+ * @param payload: { contentXmlOrHtmlString: xml字符串 }
+ */
+function insertPageHeaderXmlOrHtmlStringByParams(headerInfo, payload) {
+  const { contentXmlOrHtmlString } = payload
+  const result = domUtils.addZeroWidth(contentXmlOrHtmlString);
+  const updateString = updateReplaceApi.call(this, headerInfo, result, true)
+  const pageHeader = this.getEditorArea().querySelectorAll(".bse-header_editable");
+  Array.from(pageHeader).forEach(header => {
+    header.innerHTML = updateString
+  })
+}
+
 export default {
   ...domUtils,
   setContent,
@@ -723,6 +751,8 @@ export default {
   updatedocumentbyparams,
   validateRules,
   insertXmlOrHtmlModuleString,
+  insertPageHeaderXmlOrHtmlString,
+  insertPageHeaderXmlOrHtmlStringByParams,
   getSelection,
   creatRange,
 };

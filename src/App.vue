@@ -49,6 +49,12 @@
       <el-button slot="append" icon="el-icon-download" @click="getContentFocus"
         >focus编辑器区域</el-button
       >
+      <el-button slot="append" icon="el-icon-download" @click="insertPageHeaderByParams"
+        >插入页眉</el-button
+      >
+      <el-button slot="append" icon="el-icon-download" @click="insertPageHeaderString"
+        >插入页眉字符串</el-button
+      >
       <el-radio-group v-model="mode" @change="switchEditorMode">
         <el-radio-button label="designMode">设计</el-radio-button>
         <el-radio-button label="editMode">编辑</el-radio-button>
@@ -1040,6 +1046,38 @@ export default {
         }
       );
     },
+
+    // 插入页眉
+    insertPageHeaderByParams() {
+      const strings = `<p style="text-align: center;"><b style="color: var(--dark);">病程录</b><br><b style="color: var(--dark);"><br></b></p><p style="text-align: left;"><span class="bse-element" bse-left="" bse-right="" style="font-weight: bold" bse="%7B%22notallowdelete%22%3Atrue%2C%22contenteditable%22%3Afalse%2C%22type%22%3A%22label%22%2C%22name%22%3A%22%E5%A7%93%E5%90%8D%22%2C%22id%22%3A%22%E5%A7%93%E5%90%8D%22%2C%22placeholder%22%3A%22%E5%A7%93%E5%90%8D%22%7D" contenteditable="false"><label contenteditable="true" class="placehold-class" placeholder="姓名"></label></span>​<b style="color: var(--dark);"><span class="bse-element" bse-left="[" bse-right="]" bse="%7B%22forceUpdateWay%22%3A%22forceUpdate%22%2C%22type%22%3A%22input%22%2C%22name%22%3A%22%E5%A7%93%E5%90%8D%E8%BE%93%E5%85%A5%22%2C%22id%22%3A%22%E5%A7%93%E5%90%8D%E8%BE%93%E5%85%A5%22%2C%22placeholder%22%3A%22%E5%A7%93%E5%90%8D%E8%BE%93%E5%85%A5%22%7D" contenteditable="false"><label style="display: inline-block;vertical-align: text-top;" contenteditable="true" class="placehold-class" placeholder="姓名输入"></label></span>​&nbsp;&nbsp;<span class="bse-element" bse-left="" bse-right="" style="font-weight: bold" bse="%7B%22notallowdelete%22%3Atrue%2C%22contenteditable%22%3Afalse%2C%22type%22%3A%22label%22%2C%22name%22%3A%22%E5%B9%B4%E9%BE%84%22%2C%22id%22%3A%22%E5%B9%B4%E9%BE%84%22%2C%22placeholder%22%3A%22%E5%B9%B4%E9%BE%84%22%7D" contenteditable="false"><label contenteditable="true" class="placehold-class" placeholder="年龄"></label></span>​<span class="bse-element" bse-left="[" bse-right="]" bse="%7B%22forceUpdateWay%22%3A%22forceUpdate%22%2C%22type%22%3A%22input%22%2C%22name%22%3A%22%E5%B9%B4%E9%BE%84%E8%BE%93%E5%85%A5%22%2C%22id%22%3A%22%E5%B9%B4%E9%BE%84%E8%BE%93%E5%85%A5%22%2C%22placeholder%22%3A%22%E5%B9%B4%E9%BE%84%E8%BE%93%E5%85%A5%22%7D" contenteditable="false"><label style="display: inline-block;vertical-align: text-top;" contenteditable="true" class="placehold-class" placeholder="年龄输入"></label></span>​</b></p><br><br>`
+      this._instance.execCommand(
+        "insertpageheaderxmlorhtmlstringbyparams",
+        {
+          姓名输入: "苏苏苏",
+          年龄输入: 28,
+        },
+        { 
+          contentXmlOrHtmlString: strings,
+        },
+        (payload) => {
+          console.log(payload);
+        }
+      );
+    },
+
+    // 插入页眉字符串
+    insertPageHeaderString() {
+      const strings = `<p style="text-align: center;"><b style="color: var(--dark);">病程录</b><br><b style="color: var(--dark);"><br></b></p><p style="text-align: left;"><span class="bse-element" bse-left="" bse-right="" style="font-weight: bold" bse="%7B%22notallowdelete%22%3Atrue%2C%22contenteditable%22%3Afalse%2C%22type%22%3A%22label%22%2C%22name%22%3A%22%E5%A7%93%E5%90%8D%22%2C%22id%22%3A%22%E5%A7%93%E5%90%8D%22%2C%22placeholder%22%3A%22%E5%A7%93%E5%90%8D%22%7D" contenteditable="false"><label contenteditable="true" class="placehold-class" placeholder="姓名"></label></span>​<b style="color: var(--dark);"><span class="bse-element" bse-left="[" bse-right="]" bse="%7B%22forceUpdateWay%22%3A%22forceUpdate%22%2C%22type%22%3A%22input%22%2C%22name%22%3A%22%E5%A7%93%E5%90%8D%E8%BE%93%E5%85%A5%22%2C%22id%22%3A%22%E5%A7%93%E5%90%8D%E8%BE%93%E5%85%A5%22%2C%22placeholder%22%3A%22%E5%A7%93%E5%90%8D%E8%BE%93%E5%85%A5%22%7D" contenteditable="false"><label style="display: inline-block;vertical-align: text-top;" contenteditable="true" class="placehold-class" placeholder="姓名输入"></label></span>​&nbsp;&nbsp;<span class="bse-element" bse-left="" bse-right="" style="font-weight: bold" bse="%7B%22notallowdelete%22%3Atrue%2C%22contenteditable%22%3Afalse%2C%22type%22%3A%22label%22%2C%22name%22%3A%22%E5%B9%B4%E9%BE%84%22%2C%22id%22%3A%22%E5%B9%B4%E9%BE%84%22%2C%22placeholder%22%3A%22%E5%B9%B4%E9%BE%84%22%7D" contenteditable="false"><label contenteditable="true" class="placehold-class" placeholder="年龄"></label></span>​<span class="bse-element" bse-left="[" bse-right="]" bse="%7B%22forceUpdateWay%22%3A%22forceUpdate%22%2C%22type%22%3A%22input%22%2C%22name%22%3A%22%E5%B9%B4%E9%BE%84%E8%BE%93%E5%85%A5%22%2C%22id%22%3A%22%E5%B9%B4%E9%BE%84%E8%BE%93%E5%85%A5%22%2C%22placeholder%22%3A%22%E5%B9%B4%E9%BE%84%E8%BE%93%E5%85%A5%22%7D" contenteditable="false"><label style="display: inline-block;vertical-align: text-top;" contenteditable="true" class="placehold-class" placeholder="年龄输入"></label></span>​</b></p><br><br>`
+      this._instance.execCommand(
+        "insertpageheaderxmlorhtmlstring",
+        { 
+          contentXmlOrHtmlString: strings,
+        },
+        (payload) => {
+          console.log(payload);
+        }
+      );
+    }
   },
 };
 </script>

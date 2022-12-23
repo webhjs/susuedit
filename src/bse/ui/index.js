@@ -28,9 +28,7 @@ const htmlStr = `<!DOCTYPE html>
         <div class="bse-area__edit" id="bse-edit_area" contenteditable="true">
           <div class="bse-edit_page flex flex-col">
             <div class="flex bse-page_header" contenteditable="false">
-              <div class="flex-1 bse-header_editable" contenteditable="true">
-                页眉
-              </div>
+              <div class="flex-1 bse-header_editable" contenteditable="true"></div>
             </div>
             <div class="flex-1 flex bse-page_content" contenteditable="false">
               <div class="flex-1 bse-content_editable" contenteditable="true">
